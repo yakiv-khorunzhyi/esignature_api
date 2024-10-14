@@ -9,7 +9,7 @@ class ActionResult
     ) {
     }
 
-    public static function create(mixed $result): self
+    public static function create(mixed $result = null): self
     {
         return new self($result);
     }

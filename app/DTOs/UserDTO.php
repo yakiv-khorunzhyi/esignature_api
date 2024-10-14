@@ -14,9 +14,9 @@ class UserDTO implements DTOInterface
     public static function fromArray(array $data): self
     {
         return new self(
-            $data['name'] ?? '',
-            $data['email'] ?? '',
-            $data['password'] ?? '',
+            $data['name'],
+            $data['email'],
+            $data['password'],
         );
     }
 }

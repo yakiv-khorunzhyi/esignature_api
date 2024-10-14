@@ -48,7 +48,8 @@ class AuthController extends Controller
      *                  )
      *              )
      *          )
-     *     )
+     *     ),
+     *     @OA\Response(response=422, description="Unprocessable Entity"),
      * )
      */
     public function register(RegisterRequest $request, RegisterAction $action): JsonResponse
@@ -83,7 +84,9 @@ class AuthController extends Controller
      *                  @OA\Property(property="token", type="string", example="2|zSNFl1lPnucDwbgFTuylT1nc7cjRtMDrUjRW1eys88f2682a")
      *              )
      *          )
-     *     )
+     *     ),
+     *     @OA\Response(response=401, description="Unauthorized"),
+     *     @OA\Response(response=422, description="Unprocessable Entity"),
      * )
      */
     public function login(LoginRequest $request, LoginAction $action): JsonResponse

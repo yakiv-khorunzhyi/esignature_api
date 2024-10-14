@@ -100,6 +100,9 @@
                                 }
                             }
                         }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
                     }
                 }
             }
@@ -158,8 +161,247 @@
                                 }
                             }
                         }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
                     }
                 }
+            }
+        },
+        "/api/documents": {
+            "post": {
+                "tags": [
+                    "Documents"
+                ],
+                "summary": "Upload a document",
+                "operationId": "b442a02605d93d2af67452b4440517ed",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "properties": {
+                                    "file": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Uploaded",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "file": {
+                                                    "properties": {
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 4
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/signature-requests": {
+            "post": {
+                "tags": [
+                    "Signature"
+                ],
+                "summary": "Send a signature request to a user",
+                "operationId": "e4d6441f28af2d9ac9e0a25640114d0f",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "file_id",
+                                    "signer_id"
+                                ],
+                                "properties": {
+                                    "file_id": {
+                                        "description": "ID of the document",
+                                        "type": "integer",
+                                        "example": "2"
+                                    },
+                                    "signer_id": {
+                                        "description": "ID of the user to sign the document",
+                                        "type": "integer",
+                                        "example": "1"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Signature request sent successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "properties": {
+                                                "signature_request": {
+                                                    "properties": {
+                                                        "file_id": {
+                                                            "type": "integer",
+                                                            "example": 2
+                                                        },
+                                                        "requester_id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "signer_id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        },
+                                                        "status": {
+                                                            "type": "string",
+                                                            "example": "pending"
+                                                        },
+                                                        "created_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2024-10-14T16:23:05.000000Z"
+                                                        },
+                                                        "updated_at": {
+                                                            "type": "string",
+                                                            "format": "date-time",
+                                                            "example": "2024-10-14T16:23:05.000000Z"
+                                                        },
+                                                        "id": {
+                                                            "type": "integer",
+                                                            "example": 1
+                                                        }
+                                                    },
+                                                    "type": "object"
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/signature-requests/{id}": {
+            "post": {
+                "tags": [
+                    "Signature"
+                ],
+                "summary": "Sign document",
+                "operationId": "9c32e26c725cb74b0f241f0c9cce5c9d",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the signature request",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "signature"
+                                ],
+                                "properties": {
+                                    "signature": {
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Signature successfully added"
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "description": "Enter your Bearer token in the format: `Bearer {token}`",
+                "bearerFormat": "JWT",
+                "scheme": "bearer"
             }
         }
     },
@@ -167,6 +409,14 @@
         {
             "name": "Authentication",
             "description": "Authentication"
+        },
+        {
+            "name": "Documents",
+            "description": "Documents"
+        },
+        {
+            "name": "Signature",
+            "description": "Signature"
         }
     ]
 }

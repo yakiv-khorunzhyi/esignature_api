@@ -2,7 +2,7 @@
 
 namespace App\Actions\Auth;
 
-use Illuminate\Validation\ValidationException;
+use Illuminate\Validation\UnauthorizedException;
 use Illuminate\Support\Facades\Auth;
 use App\Actions\ActionInterface;
 use App\Actions\ActionResult;
@@ -15,7 +15,7 @@ class LoginAction implements ActionInterface
         $credentials = ['email' => $login->email, 'password' => $login->password];
 
         if (!Auth::attempt($credentials)) {
-            throw ValidationException::withMessages(['email' => ['Incorrect email or password.']]);
+            throw new UnauthorizedException('Incorrect email or password.');
         }
 
         $token = Auth::user()->createToken('api-token')->plainTextToken;

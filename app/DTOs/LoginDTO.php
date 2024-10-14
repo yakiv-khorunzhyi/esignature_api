@@ -13,8 +13,8 @@ class LoginDTO implements DTOInterface
     public static function fromArray(array $data): self
     {
         return new self(
-            $data['email'] ?? '',
-            $data['password'] ?? '',
+            $data['email'],
+            $data['password'],
         );
     }
 }
